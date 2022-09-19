@@ -190,14 +190,57 @@ class LinkedList {
   /** removeAt(idx): return & remove item at idx, */
 
   removeAt(idx) {
+    if (idx > this.length - 1 || idx < 0) throw new Error;
+    //if idx is 0
+    if (idx === 0) {
+      let temp = this.head;
+      this.head = this.head.next;
+      temp.next = null;
+      this.length--;
+      if (this.length === 0) {
+        this.head = null;
+        this.tail = null;
+      }
+      return temp.val;
+    }
 
+    let current = this.head;
+    let count = 0;
+
+    while (current !== null) {
+      if (count === idx - 1) {
+        let temp = current.next;
+        current.next = current.next.next;
+        temp.next = null;
+        this.length--;
+        if (this.length === 0) {
+          this.head = null;
+          this.tail = null;
+        }
+        return temp.val;
+      }
+      count++;
+      current = current.next;
+    }
+
+
+}
+
+/** average(): return an average of all values in the list */
+
+average() {
+  let sum = 0;
+  let current = this.head;
+
+  if (this.length === 0) return 0;
+
+  while (current !== null) {
+    sum += current.val;
+    current = current.next;
   }
 
-  /** average(): return an average of all values in the list */
-
-  average() {
-
-  }
+  return sum/this.length;
+}
 }
 
 module.exports = LinkedList;
